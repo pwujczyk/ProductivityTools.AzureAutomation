@@ -3,12 +3,12 @@
 clear
 $location = "eastus"
 $resourceGroup = "mainrg"
-New-AzResourceGroup -Name $resourceGroup -Location $location
+
 
 $storageName="mainsg"
 $skuName="Standard_RAGRS"
 $kind="StorageV2"
-$storageAccount = New-AzStorageAccount -ResourceGroupName $resourceGroup -Name $storageName  -SkuName $skuName -Location $location
+
 
 $ctx = $storageAccount.Context
 
@@ -16,11 +16,25 @@ $keys=Get-AzStorageAccountKey -ResourceGroupName $resourceGroup -Name $storageNa
 $ctx=New-AzStorageContext -StorageAccountName $storageName -StorageAccountKey $keys[0].value
 
 $imagesContainerName="images"
-New-AzStorageContainer -Name $imagesContainerName -Context $ctx -Permission blob
-Set-AzStorageBlobContent -File "c:\Diagram.png" -Container $imagesContainerName -Blob "Diagram.png"  -Context $ctx 
 
 
+function Get
 
+function CreateResourceGroup(){
+	New-AzResourceGroup -Name $resourceGroup -Location $location
+}
+
+function CreateStorageAccount(){
+	$storageAccount = New-AzStorageAccount -ResourceGroupName $resourceGroup -Name $storageName  -SkuName $skuName -Location $location
+}
+
+function CreateStorageContainer(){
+	New-AzStorageContainer -Name $imagesContainerName -Context $ctx -Permission blob
+}
+
+function AddFile(){
+	Set-AzStorageBlobContent -File "c:\Diagram.png" -Container $imagesContainerName -Blob "Diagram.png"  -Context $ctx 
+}
 
 
 
