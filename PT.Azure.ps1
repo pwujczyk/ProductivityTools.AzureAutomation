@@ -1,86 +1,60 @@
 ﻿
 
 clear
-$location = "eastus"
-$resourceGroup = "mainrg"
+. "$PSScriptRoot\PT.Configuration.ps1"
 
-
-$storageName="mainsg"
-$skuName="Standard_RAGRS"
-$kind="StorageV2"
-
-
-$ctx = $storageAccount.Context
-
-$keys=Get-AzStorageAccountKey -ResourceGroupName $resourceGroup -Name $storageName
-$ctx=New-AzStorageContext -StorageAccountName $storageName -StorageAccountKey $keys[0].value
-
-$imagesContainerName="images"
-
-
-function Get
 
 function CreateResourceGroup(){
-	New-AzResourceGroup -Name $resourceGroup -Location $location
+	$config=GetConfiguration
+	New-AzResourceGroup -Name $config.ResourceGroup -Location $config.Location
+}
+
+function RemoveResourceGroup(){
+	$config=GetConfiguration
+	Remove-AzResourceGroup -Name $config.ResourceGroup
 }
 
 function CreateStorageAccount(){
-	$storageAccount = New-AzStorageAccount -ResourceGroupName $resourceGroup -Name $storageName  -SkuName $skuName -Location $location
+	$config=GetConfiguration
+	$storageAccount = New-AzStorageAccount -ResourceGroupName $config.ResourceGroup -Name $config.StorageName  -SkuName $config.SkuName -Location $config.Location
+	$ctx = $storageAccount.Context
+}
+
+function RemoveStorageAccount(){
+	$config=GetConfiguration
+	Remove-AzStorageAccount -Name $config.StorageName -ResourceGroupName $config.ResourceGroup
 }
 
 function CreateStorageContainer(){
-	New-AzStorageContainer -Name $imagesContainerName -Context $ctx -Permission blob
+	$config=GetConfiguration
+	$context=GetContext
+	New-AzStorageContainer -Name $config.ImagesContainerName -Context $context -Permission blob
 }
 
-function AddFile(){
-	Set-AzStorageBlobContent -File "c:\Diagram.png" -Container $imagesContainerName -Blob "Diagram.png"  -Context $ctx 
+function RemoveStorageContainer(){
+	$config=GetConfiguration
+	$context=GetContext
+	Remove-AzStorageContainer -Name $config.ImagesContainerName -Context $context
 }
 
+#function AddFile(){
+#	$config=GetConfiguration
+#	Set-AzStorageBlobContent -File "c:\Diagram.png" -Container $imagesContainerName -Blob "Diagram.png"  -Context $ctx 
+#}
+
+function RemoveAll(){
+	RemoveStorageContainer
+	RemoveStorageAccount
+	RemoveResourceGroup
+}
+
+function CreateAll(){
+	CreateResourceGroup
+	CreateStorageAccount
+	CreateStorageContainer
+	#AddFile
+}
+#CreateAll
 
 
 
-
-
-
-
-
-
-#
-##clear
-##Install-Module az
-#
-##Connect-AzAccount #opens live login
-#
-#$location="westeurope"  
-#$resourceGroupName="MainRG"
-#
-#New-AzResourceGroup -Name $resourceGroupName -Location $location
-##
-#
-#
-#$storageName="mainsg"
-#$skuName="Standard_RAGRS"
-#$kind="StorageV2"
-##RAGRS https://docs.microsoft.com/pl-pl/azure/storage/common/storage-account-create?tabs=azure-powershell
-#New-AzStorageAccount -ResourceGroupName $resourceGroupName -Name $storageName -SkuName $skuName -Kind $kind -Location $location
-##Get-AzStorageAccount
-#
-#$imagesContainerName="images"
-#$keys=Get-AzStorageAccountKey -ResourceGroupName $resourceGroupName -Name $storageName
-#$context=New-AzStorageContext -StorageAccountName $storageName -StorageAccountKey $keys[0].value
-#New-AzStorageContainer -Name $imagesContainerName -Permission Container -Context $context
-#
-#
-#
-#$storageName="mainsg"
-#$skuName="Standard_RAGRS"
-#$kind="StorageV2"
-#$imagesContainerName="images"
-#Remove-AzStorageContainer -Name $imagesContainerName -Context $context
-#Remove-AzStorageAccount -Name $storageName -ResourceGroupName $resourceGroupName
-#Remove-AzResourceGroup -Name MainRG
-#
-##$context=New-AzureStorageContext -StorageAccountName $storageName -StorageAccountKey $keys[0].value
-##New-AzureStorageContainer -Name "images" -Permission Container -Context $context
-##$storageAccount=Get-AzStorageAccount -StorageAccountName mainsg -ResourceGroupName MainRG
-#
