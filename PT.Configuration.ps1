@@ -1,10 +1,10 @@
 ﻿function GetConfiguration(){
 	$config = New-Object -TypeName psobject 
-	$config | Add-Member -MemberType NoteProperty -Name Location -Value "eastus"
-	$config | Add-Member -MemberType NoteProperty -Name ResourceGroup -Value "res2"
-	$config | Add-Member -MemberType NoteProperty -Name StorageName -Value "mainsg2"
+	$config | Add-Member -MemberType NoteProperty -Name Location -Value "westeurope"
+	$config | Add-Member -MemberType NoteProperty -Name ResourceGroup -Value "ptblog"
+	$config | Add-Member -MemberType NoteProperty -Name StorageName -Value "ptblogstorage"
 	$config | Add-Member -MemberType NoteProperty -Name SkuName -Value "Standard_RAGRS"
-	$config | Add-Member -MemberType NoteProperty -Name ImagesContainerName -Value "images2"
+	$config | Add-Member -MemberType NoteProperty -Name ImagesContainerName -Value "images"
 
 
 	$config | Add-Member -MemberType NoteProperty -Name CdnProfileName -Value "productivitycdnprofile" 

@@ -44,7 +44,7 @@ function CreateCustomDomain(){
 	
 }
 
-#CreateCdnProfile
-#CreateCdnEndpoint
+CreateCdnProfile
+CreateCdnEndpoint
 
-CreateCustomDomain
+#CreateCustomDomain

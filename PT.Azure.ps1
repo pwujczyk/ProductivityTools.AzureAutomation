@@ -4,34 +4,58 @@ clear
 . "$PSScriptRoot\PT.Configuration.ps1"
 
 
-function CreateResourceGroup(){
+function CreateResourceGroup{
+	[cmdletbinding()]
+	param()
+	Write-Verbose "Hello from CreateResourceGroup"
+	
 	$config=GetConfiguration
 	New-AzResourceGroup -Name $config.ResourceGroup -Location $config.Location
 }
 
-function RemoveResourceGroup(){
+function RemoveResourceGroup{
+	[cmdletbinding()]
+	param()
+	Write-Verbose "Hello from RemoveResourceGroup"
+	
 	$config=GetConfiguration
 	Remove-AzResourceGroup -Name $config.ResourceGroup
 }
 
-function CreateStorageAccount(){
+function CreateStorageAccount{
+	[cmdletbinding()]
+	param()
+	Write-Verbose "Hello from CreateStorageAccount"
+	
 	$config=GetConfiguration
 	$storageAccount = New-AzStorageAccount -ResourceGroupName $config.ResourceGroup -Name $config.StorageName  -SkuName $config.SkuName -Location $config.Location
 	$ctx = $storageAccount.Context
 }
 
-function RemoveStorageAccount(){
+function RemoveStorageAccount{
+	[cmdletbinding()]
+	param()
+	Write-Verbose "Hello from RemoveStorageAccount"
+	
 	$config=GetConfiguration
 	Remove-AzStorageAccount -Name $config.StorageName -ResourceGroupName $config.ResourceGroup
 }
 
-function CreateStorageContainer(){
+function CreateStorageContainer{
+	[cmdletbinding()]
+	param()
+	Write-Verbose "Hello from CreateStorageContainer"
+	
 	$config=GetConfiguration
 	$context=GetContext
 	New-AzStorageContainer -Name $config.ImagesContainerName -Context $context -Permission blob
 }
 
-function RemoveStorageContainer(){
+function RemoveStorageContainer{
+	[cmdletbinding()]
+	param()
+	Write-Verbose "Hello from RemoveStorageContainer"
+	
 	$config=GetConfiguration
 	$context=GetContext
 	Remove-AzStorageContainer -Name $config.ImagesContainerName -Context $context
@@ -42,19 +66,28 @@ function RemoveStorageContainer(){
 #	Set-AzStorageBlobContent -File "c:\Diagram.png" -Container $imagesContainerName -Blob "Diagram.png"  -Context $ctx 
 #}
 
-function RemoveAll(){
-	RemoveStorageContainer
-	RemoveStorageAccount
-	RemoveResourceGroup
+function RemoveAll{
+	[cmdletbinding()]
+	param()
+	Write-Verbose "Hello from RemoveAll"
+	
+	RemoveStorageContainer -Verbose
+	RemoveStorageAccount -Verbose
+	RemoveResourceGroup -Verbose
 }
 
-function CreateAll(){
-	CreateResourceGroup
-	CreateStorageAccount
-	CreateStorageContainer
+function CreateAll{
+	[cmdletbinding()]
+	param()
+	Write-Verbose "Hello from CreateAll"
+	
+	CreateResourceGroup -Verbose
+	CreateStorageAccount -Verbose
+	CreateStorageContainer -Verbose
 	#AddFile
 }
-#CreateAll
+CreateAll -Verbose
+#RemoveAll -Verbose
 
 
 
