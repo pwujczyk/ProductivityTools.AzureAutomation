@@ -19,7 +19,7 @@ function RemoveResourceGroup{
 	Write-Verbose "Hello from RemoveResourceGroup"
 	
 	$config=GetConfiguration
-	Remove-AzResourceGroup -Name $config.ResourceGroup
+	Remove-AzResourceGroup -Name $config.ResourceGroup -Force
 }
 
 function CreateStorageAccount{
@@ -28,7 +28,7 @@ function CreateStorageAccount{
 	Write-Verbose "Hello from CreateStorageAccount"
 	
 	$config=GetConfiguration
-	$storageAccount = New-AzStorageAccount -ResourceGroupName $config.ResourceGroup -Name $config.StorageName  -SkuName $config.SkuName -Location $config.Location
+	$storageAccount = New-AzStorageAccount -ResourceGroupName $config.ResourceGroup -Name $config.StorageName  -SkuName $config.SkuName -Location $config.Location -EnableHttpsTrafficOnly $False
 	$ctx = $storageAccount.Context
 }
 
@@ -38,7 +38,17 @@ function RemoveStorageAccount{
 	Write-Verbose "Hello from RemoveStorageAccount"
 	
 	$config=GetConfiguration
-	Remove-AzStorageAccount -Name $config.StorageName -ResourceGroupName $config.ResourceGroup
+	Remove-AzStorageAccount -Name $config.StorageName -ResourceGroupName $config.ResourceGroup -Force
+}
+
+function SetStorageAccountCustomDomain{
+	[cmdletbinding()]
+	param()
+	Write-Verbose "Hello from SetStorageAccountCustomDomain"
+	
+	$config=GetConfiguration
+	Set-AzStorageAccount -ResourceGroupName $config.ResourceGroup  -AccountName $config.StorageName  -CustomDomainName $config.CdnHostname
+	
 }
 
 function CreateStorageContainer{
@@ -58,7 +68,7 @@ function RemoveStorageContainer{
 	
 	$config=GetConfiguration
 	$context=GetContext
-	Remove-AzStorageContainer -Name $config.ImagesContainerName -Context $context
+	Remove-AzStorageContainer -Name $config.ImagesContainerName -Context $context -Force
 }
 
 #function AddFile(){
@@ -84,10 +94,13 @@ function CreateAll{
 	CreateResourceGroup -Verbose
 	CreateStorageAccount -Verbose
 	CreateStorageContainer -Verbose
+	SetStorageAccountCustomDomain -Verbose
 	#AddFile
 }
 CreateAll -Verbose
 #RemoveAll -Verbose
+
+
 
 
 

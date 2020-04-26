@@ -10,7 +10,7 @@
 	$config | Add-Member -MemberType NoteProperty -Name CdnProfileName -Value "productivitycdnprofile" 
 	$config | Add-Member -MemberType NoteProperty -Name CdnSku -Value "Standard_Akamai" 
 	$config | Add-Member -MemberType NoteProperty -Name CdnEndpointName -Value "ptblog" 
-	$config | Add-Member -MemberType NoteProperty -Name CdnHostname -Value "cdn3.producvititytools.tech" 
+	$config | Add-Member -MemberType NoteProperty -Name CdnHostname -Value "cdn.productivitytools.tech" 
 	$config | Add-Member -MemberType NoteProperty -Name CustomDomainName  -Value "cdn3" 
 	return $config
 }
