@@ -66,7 +66,7 @@ function Create-ResourceGroup{
 	New-AzResourceGroup -Name $config.ResourceGroup -Location $config.Location
 }
 
-function RemoveResourceGroup{
+function Remove-ResourceGroup{
 	[cmdletbinding()]
 	param(
 		[Parameter(Mandatory=$true)]
@@ -82,7 +82,7 @@ function RemoveResourceGroup{
 	Remove-AzResourceGroup -Name $config.ResourceGroup -Force
 }
 
-function CreateStorageAccount{
+function Create-StorageAccount{
 	[cmdletbinding()]
 	param(
 		[Parameter(Mandatory=$true)]
@@ -98,7 +98,7 @@ function CreateStorageAccount{
 	#$ctx = $storageAccount.Context
 }
 
-function RemoveStorageAccount{
+function Remove-StorageAccount{
 	[cmdletbinding()]
 	param(
 		[Parameter(Mandatory=$true)]
@@ -112,7 +112,7 @@ function RemoveStorageAccount{
 	Remove-AzStorageAccount -Name $config.StorageName -ResourceGroupName $config.ResourceGroup -Force
 }
 
-function CreateStorageContainer{
+function Create-StorageContainer{
 	[cmdletbinding()]
 	param(
 		[Parameter(Mandatory=$true)]
@@ -128,7 +128,7 @@ function CreateStorageContainer{
 	New-AzStorageContainer -Name $config.StorageContainerName -Context $context -Permission blob
 }
 
-function RemoveStorageContainer{
+function Remove-StorageContainer{
 	[cmdletbinding()]
 	param(
 		[Parameter(Mandatory=$true)]
@@ -144,7 +144,7 @@ function RemoveStorageContainer{
 	Remove-AzStorageContainer -Name $config.StorageContainerName -Context $context -Force
 }
 
-function SetStorageAccountCustomDomain{
+function Set-StorageAccountCustomDomain{
 	[cmdletbinding()]
 	param(
 		[Parameter(Mandatory=$true)]
@@ -182,6 +182,6 @@ function Push-FileToAzureBlobStorage{
 	
 	$config=GetConfiguration $Profile
 	$context=GetContext $Profile
-	$blob=Set-AzStorageBlobContent -File $Path -Container $config.ImagesContainerName -Blob $DestinationFileName -Context $context -Force 
+	$blob=Set-AzStorageBlobContent -File $Path -Container $config.StorageContainerName -Blob $DestinationFileName -Context $context -Force 
 	return $blob
 }
