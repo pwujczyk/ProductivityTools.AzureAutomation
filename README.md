@@ -16,48 +16,48 @@
 Module simplifies creating azure resources. 
 <!--more-->
 
-To achieve particular goal in azure you need to create couple of the resources in the proper order. For example I am hosting images to my blog on the Azure Blob Storage. To be able to store image on azure on the clean account I need to
+To achieve a particular goal in azure you need to create a couple of the resources in the proper order. For example, I am hosting images for my blog on Azure Blob Storage. To be able to store an image on azure on the clean account I need to
 - Create resource Group
-- Create storage account
-- Create storage container
+- Create a storage account
+- Create a storage container
 
-And then I can finally push image. 
+And then I can finally push the image. 
 
-All those actions can be done manually, in PowerShell or other ways. 
+All those actions can be done manually, in PowerShell, or in other ways. 
 
-In PowerShell creation is not so nice as to create storage account you need to provide name of the Resource Group. So very fast scripts written starts to passing a lot of references and code become difficult to manage. 
+In PowerShell creation is not so nice as to create a storage account you need to provide the name of the Resource Group. So very fast scripts written start to pass a lot of references and code become difficult to manage. 
 
-My idea here is to store the main names in the configuration and call only actions without the parameters. But of course it need to be flexible so I additionally introduced profiles. 
+My idea here is to store the main names in the configuration and call only actions without the parameters. But of course, it needs to be flexible so I additionally introduced profiles. 
 
 ## MasterConfiguration
 
 All information needed for creating resources should be stored in MasterConfiguration.
 
-Below we see two profiles AzureProductivityTools and AzureProductivityTools2. Each of the profile contains needed configuration. 
+Below we see two profiles AzureProductivityTools and AzureProductivityTools2. Each of the profiles contains the needed configuration. 
 
 ```
   "AzureProductivityTools":{
-	  "Location":"westeurope",
-	  "ResourceGroup":"ptblog",
-	  "StorageName":"ptblogstorage",
-	  "SkuName":"Standard_RAGRS",
-	  "StorageContainerName":"images",
-	  "CdnHostname":"cdn2.productivitytools.tech"
+      "Location":"westeurope",
+      "ResourceGroup":"ptblog",
+      "StorageName":"ptblogstorage",
+      "SkuName":"Standard_RAGRS",
+      "StorageContainerName":"images",
+      "CdnHostname":"cdn2.productivitytools.tech"
   },
   
    "AzureProductivityTools2":{
-	  "Location":"westeurope",
-	  "ResourceGroup":"ptblog2",
-	  "StorageName":"ptblogstorage2",
-	  "SkuName":"Standard_RAGRS",
-	  "StorageContainerName":"images",
-	  "CdnHostname":"cdn2.productivitytools.tech"
+      "Location":"westeurope",
+      "ResourceGroup":"ptblog2",
+      "StorageName":"ptblogstorage2",
+      "SkuName":"Standard_RAGRS",
+      "StorageContainerName":"images",
+      "CdnHostname":"cdn2.productivitytools.tech"
   }
 ```
 
 ## Module actions - base
 
-Module exposes following base actions
+The module exposes following base actions
 
 - Create-ResourceGroup
 - Remove-ResourceGroup
@@ -70,7 +70,7 @@ Module exposes following base actions
 And one additional one
 - Push-FileToAzureBlobStorage
 
-To use base actions them we need to provide only the profile which we would like to use. Following command will create resource group with the name taken from the MasterConfiguration from the profile **AzureProductivityTools** so *ptblog*.
+To use base actions them we need to provide only the profile which we would like to use. Following command will create a resource group with the name taken from the MasterConfiguration from the profile **AzureProductivityTools** so *ptblog*.
 
 ```powershell
 CreateResourceGroup -Profile AzureProductivityTools -Verbose
@@ -78,7 +78,7 @@ CreateResourceGroup -Profile AzureProductivityTools -Verbose
 
 ## Module actions - additional
 
-Module exposes following additional actions:
+Module exposes the following additional actions:
 
 - Push-FileToAzureBlobStorage
 
@@ -90,7 +90,7 @@ Push-FileToAzureBlobStorage -Profile AzureProductivityTools -Path D:\jpg\documen
 
 ## Set of actions
 
-I am combining actions to make final solution in Azure. For example for the purpose of storing images for a blog I am using 
+I am combining actions to make the final solution in Azure. For example, for the purpose of storing images for a blog, I am using 
 
 ```powershell
 $profile= "AzureProductivityTools" 
