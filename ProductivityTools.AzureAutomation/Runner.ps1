@@ -1,7 +1,7 @@
 clear
 
 cd $PSScriptRoot
-Import-Module .\ProductivityTools.Azure.Scripts.psm1 -Force
+Import-Module .\ProductivityTools.AzureAutomation.psm1 -Force
 
 #CreateResourceGroup -Profile "AzureProductivityTools2"  -Verbose
 #RemoveResourceGroup -Profile "AzureProductivityTools2"  -Verbose
