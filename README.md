@@ -103,7 +103,7 @@ CreateStorageContainer -Profile $profile  -Verbose
 And to remove resources
 
 ```powershell
-$profile= "AzureProductivityTools2" 
+$profile= "AzureProductivityTools" 
     
 RemoveStorageContainer -Profile $profile -Verbose
 RemoveStorageAccount -Profile $profile -Verbose
