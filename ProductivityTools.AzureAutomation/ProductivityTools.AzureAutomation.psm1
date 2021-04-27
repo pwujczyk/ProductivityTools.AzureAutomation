@@ -51,7 +51,7 @@ function GetContext{
 	return $ctx
 }
 
-function CreateResourceGroup{
+function Create-ResourceGroup{
 	[cmdletbinding()]
 	param(
 		[Parameter(Mandatory=$true)]
