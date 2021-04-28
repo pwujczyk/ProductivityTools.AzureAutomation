@@ -28,8 +28,8 @@
   </PropertyGroup>
   <ItemGroup />
   <ItemGroup>
-    <Compile Include="ProductivityTools.Azure.Scripts.psd1" />
-    <Compile Include="ProductivityTools.Azure.Scripts.psm1" />
+    <Compile Include="ProductivityTools.AzureAutomation.psd1" />
+    <Compile Include="ProductivityTools.AzureAutomation.psm1" />
     <Compile Include="Runner.ps1" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
