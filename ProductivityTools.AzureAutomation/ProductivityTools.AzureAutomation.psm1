@@ -176,7 +176,16 @@ function Push-FileToAzureBlobStorage{
 	
 	$file=Get-Item $Path
 	$fileName=$file.Name
-	$DestinationFileName="$Prefix\$fileName"
+
+	if($Prefix -ne "" -and $Prefix -ne $null)
+	{
+		$DestinationFileName="$Prefix\$fileName"
+	}
+	else
+	{
+		$DestinationFileName=$fileName
+	}
+	
 	Write-Verbose "Destination file name which will be placed on azure blob: $DestinationFileName"
 	
 	

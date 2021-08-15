@@ -95,9 +95,9 @@ I am combining actions to make the final solution in Azure. For example, for the
 ```powershell
 $profile= "AzureProductivityTools" 
     
-CreateResourceGroup -Profile $profile -Verbose
-CreateStorageAccount -Profile $profile  -Verbose
-CreateStorageContainer -Profile $profile  -Verbose
+Create-ResourceGroup -Profile $profile -Verbose
+Create-StorageAccount -Profile $profile  -Verbose
+Create-StorageContainer -Profile $profile  -Verbose
 ``` 
 
 And to remove resources
@@ -105,8 +105,8 @@ And to remove resources
 ```powershell
 $profile= "AzureProductivityTools" 
     
-RemoveStorageContainer -Profile $profile -Verbose
-RemoveStorageAccount -Profile $profile -Verbose
-RemoveResourceGroup -Profile $profile -Verbose
+Remove-StorageContainer -Profile $profile -Verbose
+Remove-StorageAccount -Profile $profile -Verbose
+Remove-ResourceGroup -Profile $profile -Verbose
 
 ``` 
