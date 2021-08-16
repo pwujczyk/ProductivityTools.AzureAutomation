@@ -62,8 +62,19 @@ function Create-ResourceGroup{
 	Write-Verbose "Hello from CreateResourceGroup"
 	
 	$config=GetConfiguration $Profile
-	Write-Verbose "INVOKE COMMAND: New-AzResourceGroup -Name $($config.ResourceGroup) -Location $($config.Location)"
-	New-AzResourceGroup -Name $config.ResourceGroup -Location $config.Location
+
+	Write-Verbose "INVOKE COMMAND: Get-AzResourceGrou -Name $($config.ResourceGroup) -Location $($config.Location)"
+	$rg=Get-AzResourceGroup -Name $config.ResourceGroup -Location $config.Location -ErrorAction SilentlyContinue
+
+	if($rg -eq $null)
+	{
+		Write-Verbose "INVOKE COMMAND: New-AzResourceGroup -Name $($config.ResourceGroup) -Location $($config.Location)"
+		New-AzResourceGroup -Name $config.ResourceGroup -Location $config.Location
+	}
+	else
+	{
+		Write-Verbose "Resource group exists - ommiting"
+	}
 }
 
 function Remove-ResourceGroup{
@@ -92,9 +103,18 @@ function Create-StorageAccount{
 	Write-Verbose "Hello from CreateStorageAccount"
 	
 	$config=GetConfiguration $Profile
-	Write-Verbose "INVOKE COMMAND: New-AzStorageAccount -ResourceGroupName $($config.ResourceGroup) -Name $($config.StorageName)  -SkuName $($config.SkuName) -Location $($config.Location) -EnableHttpsTrafficOnly $($False)"
 
-	$storageAccount = New-AzStorageAccount -ResourceGroupName $config.ResourceGroup -Name $config.StorageName  -SkuName $config.SkuName -Location $config.Location -EnableHttpsTrafficOnly $False
+	Write-Verbose "INVOKE COMMAND: $gs=Get-AZStorageAccount -ResourceGroupName $config.ResourceGroup -Name $config.StorageName -ErrorAction SilentlyContinue"
+	$gs=Get-AZStorageAccount -ResourceGroupName $config.ResourceGroup -Name $config.StorageName -ErrorAction SilentlyContinue
+	if ($gs -eq $null)
+	{
+		Write-Verbose "INVOKE COMMAND: New-AzStorageAccount -ResourceGroupName $($config.ResourceGroup) -Name $($config.StorageName)  -SkuName $($config.SkuName) -Location $($config.Location) -EnableHttpsTrafficOnly $($False)"
+		$storageAccount = New-AzStorageAccount -ResourceGroupName $config.ResourceGroup -Name $config.StorageName  -SkuName $config.SkuName -Location $config.Location -EnableHttpsTrafficOnly $False
+	}
+	else
+	{
+		Write-Verbose "Storage account exists - ommiting"
+	}
 	#$ctx = $storageAccount.Context
 }
 
@@ -124,8 +144,20 @@ function Create-StorageContainer{
 	
 	$config=GetConfiguration -Profile $Profile
 	$context=GetContext -Profile $Profile
-	Write-Verbose "INVOKE COMMAND: New-AzStorageContainer -Name $($config.StorageContainerName) -Context $($context) -Permission blob"
-	New-AzStorageContainer -Name $config.StorageContainerName -Context $context -Permission blob
+	
+			
+	Write-Verbose "INVOKE COMMAND: =Get-AzStorageContainer -Name $config.StorageContainerName -Context $context -ErrorAction SilentlyContinue"
+
+	$sc=Get-AzStorageContainer -Name $config.StorageContainerName -Context $context -ErrorAction SilentlyContinue
+	if($sc -eq $null)
+	{
+		Write-Verbose "INVOKE COMMAND: New-AzStorageContainer -Name $($config.StorageContainerName) -Context $($context) -Permission blob"
+		New-AzStorageContainer -Name $config.StorageContainerName -Context $context -Permission blob
+	}
+	else
+	{
+		Write-Verbose "Storage account exists - ommiting"
+	}
 }
 
 function Remove-StorageContainer{
