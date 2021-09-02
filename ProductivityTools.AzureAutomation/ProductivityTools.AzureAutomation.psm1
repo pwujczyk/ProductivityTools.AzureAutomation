@@ -227,7 +227,7 @@ function Push-FileToAzureBlobStorage{
 	return $blob
 }
 
-function Get-ContainerItems(){
+function Get-ContainerBlobs(){
 		[cmdletbinding()]
 	param(
 		[string]$Profile
@@ -240,5 +240,50 @@ function Get-ContainerItems(){
 	foreach($blob in $blobs){
 		Write-Output $blob.BlobClient.Uri.AbsoluteUri
 	}
+}
 
+function RemoveBlob(){
+	
+	[cmdletbinding()]
+	param(
+		[string]$Profile,
+		[Microsoft.WindowsAzure.Commands.Common.Storage.ResourceModel.AzureStorageBlob]$Blob
+	)
+
+	$context=GetContext $Profile
+	Remove-AzStorageBlob -Container "ContainerName" -Blob "BlobName"
+
+}
+
+function Remove-ContainerBlob(){
+	
+	[cmdletbinding()]
+	param(
+		[string]$Profile,
+		[string]$BlobName,
+		[switch]$Force
+	)
+
+	$context=GetContext $Profile
+	$config=GetConfiguration $Profile
+	Write-Verbose "Storage container name: $($config.StorageContainerName)"
+	$blobs=Get-AzStorageBlob -Context $context -Container $config.StorageContainerName 
+	foreach($blob in $blobs){
+		if($blob.Name -eq $BlobName){
+			if($Force.IsPresent)
+			{
+				Remove-AzStorageBlob -Container $config.StorageContainerName -Blob "$BlobName" -Context $context
+			}
+			else
+			{
+				Write-Output "Are you sure you would like to remove $($blob.BlobClient.Uri.AbsoluteUri)? (y/n)"
+				$answer=Read-Host
+				if($answer -eq "y")
+				{
+					Remove-AzStorageBlob -Container $config.StorageContainerName -Blob "$BlobName" Context $context
+				}
+			}
+		}
+	}
+	
 }

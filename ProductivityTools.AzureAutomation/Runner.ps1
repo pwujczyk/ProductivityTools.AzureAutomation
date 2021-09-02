@@ -7,8 +7,9 @@ Import-Module .\ProductivityTools.AzureAutomation.psm1 -Force
 #RemoveResourceGroup -Profile "AzureProductivityTools2"  -Verbose
 
 #Push-FileToAzureBlobStorage -Profile "AzureProductivityTools2" -Path ".\blob\usflag.png" -Prefix "test" -Verbose
-Get-ContainerItems -Profile "AzureProductivityTools2" -Verbose
-
+Get-ContainerBlobs -Profile "AzureProductivityTools2" 
+Remove-ContainerBlob -Profile "AzureProductivityTools2" -BlobName "test/usflag.png" -Force
+Get-ContainerBlobs -Profile "AzureProductivityTools2" 
 function RemoveAll{
 	[cmdletbinding()]
 	param()
