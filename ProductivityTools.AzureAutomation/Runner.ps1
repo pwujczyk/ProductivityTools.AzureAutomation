@@ -6,7 +6,8 @@ Import-Module .\ProductivityTools.AzureAutomation.psm1 -Force
 #CreateResourceGroup -Profile "AzureProductivityTools2"  -Verbose
 #RemoveResourceGroup -Profile "AzureProductivityTools2"  -Verbose
 
-#Push-FileToAzureBlobStorage -Profile "AzureProductivityTools" -Path ".\blob\usflag.png" -Prefix "test" -Verbose
+#Push-FileToAzureBlobStorage -Profile "AzureProductivityTools2" -Path ".\blob\usflag.png" -Prefix "test" -Verbose
+Get-ContainerItems -Profile "AzureProductivityTools2" -Verbose
 
 function RemoveAll{
 	[cmdletbinding()]
@@ -15,9 +16,9 @@ function RemoveAll{
     
     $profile= "AzureProductivityTools2" 
     
-	RemoveStorageContainer -Profile $profile -Verbose
-	RemoveStorageAccount -Profile $profile -Verbose
-	RemoveResourceGroup -Profile $profile -Verbose
+	Remove-StorageContainer -Profile $profile -Verbose
+	Remove-StorageAccount -Profile $profile -Verbose
+	Remove-ResourceGroup -Profile $profile -Verbose
 }
 
 function CreateAll{
@@ -27,11 +28,10 @@ function CreateAll{
     
     $profile= "AzureProductivityTools2" 
     
-	CreateResourceGroup -Profile $profile -Verbose
-	CreateStorageAccount -Profile $profile  -Verbose
-	CreateStorageContainer -Profile $profile  -Verbose
-	SetStorageAccountCustomDomain -Profile $profile  -Verbose
-	#AddFile
+	Create-ResourceGroup -Profile $profile -Verbose
+	Create-StorageAccount -Profile $profile  -Verbose
+	Create-StorageContainer -Profile $profile  -Verbose
+	Set-StorageAccountCustomDomain -Profile $profile  -Verbose
 }
 #CreateAll -Verbose
-RemoveAll -Verbose
+#RemoveAll -Verbose

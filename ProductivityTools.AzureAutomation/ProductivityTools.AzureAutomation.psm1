@@ -226,3 +226,19 @@ function Push-FileToAzureBlobStorage{
 	$blob=Set-AzStorageBlobContent -File $Path -Container $config.StorageContainerName -Blob $DestinationFileName -Context $context -Force 
 	return $blob
 }
+
+function Get-ContainerItems(){
+		[cmdletbinding()]
+	param(
+		[string]$Profile
+	)
+
+	$context=GetContext $Profile
+	$config=GetConfiguration $Profile
+	Write-Verbose "Storage container name: $($config.StorageContainerName)"
+	$blobs=Get-AzStorageBlob -Context $context -Container $config.StorageContainerName 
+	foreach($blob in $blobs){
+		Write-Output $blob.BlobClient.Uri.AbsoluteUri
+	}
+
+}
