@@ -87,11 +87,15 @@ Module exposes the following additional actions:
 - Remove-AzureBlobStorageFile
 
 
-This command has one parameter - path to the file:
+
 
 ```powershell
 Push-FileToAzureBlobStorage -Profile AzureProductivityTools -Path D:\jpg\documentation.png
+Get-AzureBlobStorageFiles -Profile "AzureProductivityTools"
+Remove-AzureBlobStorageFile -Profile "AzureProductivityTools" -Name "documentation.png"
 ```
+
+![](images\Pushfileexample.png)
 
 ## Set of actions
 
