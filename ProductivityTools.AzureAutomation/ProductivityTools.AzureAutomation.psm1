@@ -261,7 +261,7 @@ function Remove-AzureBlobStorageFile(){
 	[cmdletbinding()]
 	param(
 		[string]$Profile,
-		[string]$BlobName,
+		[string]$Name,
 		[switch]$Force
 	)
 
@@ -270,10 +270,10 @@ function Remove-AzureBlobStorageFile(){
 	Write-Verbose "Storage container name: $($config.StorageContainerName)"
 	$blobs=Get-AzStorageBlob -Context $context -Container $config.StorageContainerName 
 	foreach($blob in $blobs){
-		if($blob.Name -eq $BlobName){
+		if($blob.Name -eq $Name){
 			if($Force.IsPresent)
 			{
-				Remove-AzStorageBlob -Container $config.StorageContainerName -Blob "$BlobName" -Context $context
+				Remove-AzStorageBlob -Container $config.StorageContainerName -Blob "$Name" -Context $context
 			}
 			else
 			{
@@ -281,7 +281,7 @@ function Remove-AzureBlobStorageFile(){
 				$answer=Read-Host
 				if($answer -eq "y")
 				{
-					Remove-AzStorageBlob -Container $config.StorageContainerName -Blob "$BlobName" Context $context
+					Remove-AzStorageBlob -Container $config.StorageContainerName -Blob "$Name" -Context $context
 				}
 			}
 		}
