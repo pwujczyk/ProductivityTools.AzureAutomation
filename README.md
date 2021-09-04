@@ -67,8 +67,10 @@ The module exposes following base actions
 - Remove-StorageContainer
 - Set-StorageAccountCustomDomain
 
-And one additional one
+To manage files it also exposes methods
 - Push-FileToAzureBlobStorage
+- Get-ContainerBlobs
+- Remove-ContainerBlob
 
 To use base actions them we need to provide only the profile which we would like to use. Following command will create a resource group with the name taken from the MasterConfiguration from the profile **AzureProductivityTools** so *ptblog*.
 

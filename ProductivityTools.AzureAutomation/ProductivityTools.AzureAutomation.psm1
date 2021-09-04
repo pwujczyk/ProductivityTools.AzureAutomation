@@ -227,7 +227,7 @@ function Push-FileToAzureBlobStorage{
 	return $blob
 }
 
-function Get-ContainerBlobs(){
+function Get-AzureBlobStorageFiles(){
 		[cmdletbinding()]
 	param(
 		[string]$Profile
@@ -255,7 +255,7 @@ function RemoveBlob(){
 
 }
 
-function Remove-ContainerBlob(){
+function Remove-AzureBlobStorageFile(){
 	
 	[cmdletbinding()]
 	param(
@@ -285,5 +285,15 @@ function Remove-ContainerBlob(){
 			}
 		}
 	}
-	
 }
+
+Export-ModuleMember Create-ResourceGroup
+Export-ModuleMember Remove-ResourceGroup
+Export-ModuleMember Create-StorageAccount
+Export-ModuleMember Remove-StorageAccount
+Export-ModuleMember Create-StorageContainer
+Export-ModuleMember Remove-StorageContainer
+Export-ModuleMember Set-StorageAccountCustomDomai
+Export-ModuleMember Push-FileToAzureBlobStorage
+Export-ModuleMember Get-AzureBlobStorageFiles
+Export-ModuleMember Remove-AzureBlobStorageFile
