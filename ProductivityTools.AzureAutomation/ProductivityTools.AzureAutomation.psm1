@@ -63,7 +63,7 @@ function Create-ResourceGroup{
 	
 	$config=GetConfiguration $Profile
 
-	Write-Verbose "INVOKE COMMAND: Get-AzResourceGrou -Name $($config.ResourceGroup) -Location $($config.Location)"
+	Write-Verbose "INVOKE COMMAND: Get-AzResourceGroup -Name $($config.ResourceGroup) -Location $($config.Location)"
 	$rg=Get-AzResourceGroup -Name $config.ResourceGroup -Location $config.Location -ErrorAction SilentlyContinue
 
 	if($rg -eq $null)
@@ -109,6 +109,7 @@ function Create-StorageAccount{
 	if ($gs -eq $null)
 	{
 		Write-Verbose "INVOKE COMMAND: New-AzStorageAccount -ResourceGroupName $($config.ResourceGroup) -Name $($config.StorageName)  -SkuName $($config.SkuName) -Location $($config.Location) -EnableHttpsTrafficOnly $($False)"
+		Write-Verbose "Name of the storage account name needs to be unique across azure as it will translate to the address: https://accountname.blob.core.windows.net"
 		$storageAccount = New-AzStorageAccount -ResourceGroupName $config.ResourceGroup -Name $config.StorageName  -SkuName $config.SkuName -Location $config.Location -EnableHttpsTrafficOnly $False
 	}
 	else
@@ -293,7 +294,7 @@ Export-ModuleMember Create-StorageAccount
 Export-ModuleMember Remove-StorageAccount
 Export-ModuleMember Create-StorageContainer
 Export-ModuleMember Remove-StorageContainer
-Export-ModuleMember Set-StorageAccountCustomDomai
+Export-ModuleMember Set-StorageAccountCustomDomain
 Export-ModuleMember Push-FileToAzureBlobStorage
 Export-ModuleMember Get-AzureBlobStorageFiles
 Export-ModuleMember Remove-AzureBlobStorageFile

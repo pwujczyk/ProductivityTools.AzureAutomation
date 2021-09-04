@@ -83,6 +83,9 @@ CreateResourceGroup -Profile AzureProductivityTools -Verbose
 Module exposes the following additional actions:
 
 - Push-FileToAzureBlobStorage
+- Get-AzureBlobStorageFiles
+- Remove-AzureBlobStorageFile
+
 
 This command has one parameter - path to the file:
 
