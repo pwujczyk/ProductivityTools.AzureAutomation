@@ -10,7 +10,7 @@ Import-Module .\ProductivityTools.AzureAutomation.psm1 -Force
 #Get-AzureBlobStorageFiles -Profile "AzureProductivityTools2" 
 #Remove-AzureBlobStorageFile -Profile "AzureProductivityTools2" -BlobName "test/usflag.png" -Force
 #Get-AzureBlobStorageFiles -Profile "AzureProductivityTools2" 
-Remove-AzureBlobStorageFile -Profile "AzureProductivityTools2"-Name "PowershellApps.rar"
+#Remove-AzureBlobStorageFile -Profile "AzureProductivityTools2"-Name "PowershellApps.rar"
 function RemoveAll{
 	[cmdletbinding()]
 	param()
