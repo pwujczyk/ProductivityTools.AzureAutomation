@@ -243,6 +243,22 @@ function Get-AzureBlobStorageFiles(){
 	}
 }
 
+function Get-AzureBlobStorageFilesNames(){
+		[cmdletbinding()]
+	param(
+		[string]$Profile
+	)
+
+	$context=GetContext $Profile
+	$config=GetConfiguration $Profile
+	Write-Verbose "Storage container name: $($config.StorageContainerName)"
+	$blobs=Get-AzStorageBlob -Context $context -Container $config.StorageContainerName 
+	foreach($blob in $blobs){
+		Write-Output $blob.Name
+	}
+}
+
+
 function RemoveBlob(){
 	
 	[cmdletbinding()]
@@ -269,7 +285,9 @@ function Remove-AzureBlobStorageFile(){
 	$config=GetConfiguration $Profile
 	Write-Verbose "Storage container name: $($config.StorageContainerName)"
 	$blobs=Get-AzStorageBlob -Context $context -Container $config.StorageContainerName 
+	
 	foreach($blob in $blobs){
+		Write-Verbose "$($blob.Name) compared to $Name"
 		if($blob.Name -eq $Name){
 			if($Force.IsPresent)
 			{
@@ -298,3 +316,4 @@ Export-ModuleMember Set-StorageAccountCustomDomain
 Export-ModuleMember Push-FileToAzureBlobStorage
 Export-ModuleMember Get-AzureBlobStorageFiles
 Export-ModuleMember Remove-AzureBlobStorageFile
+Export-ModuleMember Get-AzureBlobStorageFilesNames
