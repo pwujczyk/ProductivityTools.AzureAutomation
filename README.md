@@ -66,6 +66,8 @@ The module exposes following base actions
 - Create-StorageContainer
 - Remove-StorageContainer
 - Set-StorageAccountCustomDomain
+- Get-AzureBlobStorageFilesNames
+- Get-AzureBlobStorageFiles
 
 To manage files it also exposes methods
 - Push-FileToAzureBlobStorage
