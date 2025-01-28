@@ -12,7 +12,7 @@
 RootModule = 'ProductivityTools.AzureAutomation.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.8'
+ModuleVersion = '0.0.9'
 
 # ID used to uniquely identify this module
 GUID = '05b1ae2f-d068-401c-903f-645e0260abcd'
@@ -39,6 +39,7 @@ FunctionsToExport = @('Create-ResourceGroup',
 	'Set-StorageAccountCustomDomain',
 	'Push-FileToAzureBlobStorage',
     'Get-AzureBlobStorageFiles',
+    'Get-AzureBlobStorageFilesNames'
     'Remove-AzureBlobStorageFile'
 )
 
